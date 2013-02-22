@@ -335,9 +335,17 @@ void Robot::UpdatePose()
 void Uni::UpdateAll()
 {
   // if we've done enough updates, exit the program
-  if( updates_max > 0 && updates > updates_max )
+  if( updates_max > 0 && updates > updates_max ){
+
+	  FILE * f;
+	  f = fopen("output", "w");
+  	  FOR_EACH (r, population){
+		fprintf(f,"%f, %f, %f\n", r->pose[0], r->pose[1], r->pose[2]);
+	  }
+	  fclose(f);
     exit(1);
   
+  }
   if( ! paused )
     {
       FOR_EACH( r, population )
